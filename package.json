@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
-    "preinstall": "npm install --include=optional 2>/dev/null || true"
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
