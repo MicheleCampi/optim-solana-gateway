@@ -73,11 +73,11 @@ function trackSolve(endpoint, ms) {
 
 // ── Solver Bridge ──
 const SOLVER_MAP = {
-  "/solve/schedule": "/solve/scheduling", "/solve/routing": "/solve/routing",
-  "/solve/packing": "/solve/packing", "/solve/pareto": "/solve/pareto",
-  "/solve/stochastic": "/solve/stochastic", "/solve/robust": "/solve/robust",
-  "/solve/sensitivity": "/solve/sensitivity", "/solve/prescriptive": "/solve/prescriptive",
-  "/solve/validate": "/solve/validate",
+  "/solve/schedule": "/optimize_schedule", "/solve/routing": "/optimize_routing",
+  "/solve/packing": "/optimize_packing", "/solve/pareto": "/optimize_pareto",
+  "/solve/stochastic": "/optimize_stochastic", "/solve/robust": "/optimize_robust",
+  "/solve/sensitivity": "/analyze_sensitivity", "/solve/prescriptive": "/prescriptive_advise",
+  "/solve/validate": "/validate_schedule",
 };
 
 for (const [path, solverPath] of Object.entries(SOLVER_MAP)) {
