@@ -128,6 +128,18 @@ app.get("/stats", (_req, res) => {
   });
 });
 
+app.get("/docs/templates", (_req, res) => {
+  import("fs").then(fs => {
+    const templates = JSON.parse(fs.readFileSync("docs/prediction-market-templates.json", "utf8"));
+    res.json(templates);
+  });
+});
+app.get("/docs/templates/prediction-markets", (_req, res) => {
+  import("fs").then(fs => {
+    const templates = JSON.parse(fs.readFileSync("docs/prediction-market-templates.json", "utf8"));
+    res.json(templates);
+  });
+});
 app.get("/docs", (_req, res) => {
   res.json({
     service: "OptimEngine Solana Gateway", chain: "Solana Mainnet (solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp)",
