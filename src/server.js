@@ -87,7 +87,7 @@ for (const [path, solverPath] of Object.entries(SOLVER_MAP)) {
       const solverRes = await fetch(`${ENGINE_URL}${solverPath}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "X-Engine-Key": ENGINE_KEY },
-        body: JSON.stringify(req.body),
+        body: JSON.stringify(solverPath === "/optimize_routing" ? { allow_drop_visits: true, ...req.body } : req.body),
       });
       const data = await solverRes.json();
       const ms = Date.now() - t0;
