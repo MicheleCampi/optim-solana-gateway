@@ -2,6 +2,7 @@ import "dotenv/config";
 import { predictStrategy } from "./predict-strategy.js";
 import { routeLiquidity } from "./route-liquidity.js";
 import { scheduleRobust } from "./schedule-robust.js";
+import { packResources } from "./pack-resources.js";
 import express from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -56,6 +57,7 @@ const paidRoutes = {
   "POST /predict-strategy":  { accepts: accept("$0.80"), description: "Pipeline: Stochastic + Pareto + Sensitivity + Prescriptive — Strategies A/B/C", mimeType: "application/json" },
   "POST /route-liquidity":   { accepts: accept("$0.35"), description: "Pipeline: Routing + Robust — Liquidity routing with worst-case protection", mimeType: "application/json" },
   "POST /schedule-robust":   { accepts: accept("$0.35"), description: "Pipeline: Scheduling + Stochastic — Schedule with Monte Carlo risk", mimeType: "application/json" },
+  "POST /pack-resources":    { accepts: accept("$0.25"), description: "Pipeline: Packing + Pareto — Resource allocation with trade-offs", mimeType: "application/json" },
 };
 
 app.use(paymentMiddleware(paidRoutes, server));
@@ -109,6 +111,7 @@ for (const [path, solverPath] of Object.entries(SOLVER_MAP)) {
 app.post("/predict-strategy", predictStrategy);
 app.post("/route-liquidity", routeLiquidity);
 app.post("/schedule-robust", scheduleRobust);
+app.post("/pack-resources", packResources);
 app.get("/health", (_req, res) => {
   res.json({
     gateway: "operational", version: "1.0.0", service: "OptimEngine Solana Gateway",
