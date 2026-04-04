@@ -3,6 +3,7 @@ import { predictStrategy } from "./predict-strategy.js";
 import { routeLiquidity } from "./route-liquidity.js";
 import { scheduleRobust } from "./schedule-robust.js";
 import { packResources } from "./pack-resources.js";
+import { forecastBasic, riskAnalysis, batchPm, validateDecision } from "./pm-endpoints.js";
 import express from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -58,6 +59,11 @@ const paidRoutes = {
   "POST /route-liquidity":   { accepts: accept("$0.35"), description: "Pipeline: Routing + Robust — Liquidity routing with worst-case protection", mimeType: "application/json" },
   "POST /schedule-robust":   { accepts: accept("$0.35"), description: "Pipeline: Scheduling + Stochastic — Schedule with Monte Carlo risk", mimeType: "application/json" },
   "POST /pack-resources":    { accepts: accept("$0.25"), description: "Pipeline: Packing + Pareto — Resource allocation with trade-offs", mimeType: "application/json" },
+  "POST /forecast-basic":    { accepts: accept("$0.25"), description: "Entry-level forecast with CI 95% and trend analysis", mimeType: "application/json" },
+  "POST /risk-analysis":     { accepts: accept("$1.00"), description: "CVaR 95% risk quantification + sensitivity fragility check", mimeType: "application/json" },
+  "POST /full-intel":        { accepts: accept("$3.00"), description: "Complete pipeline: Stochastic+Pareto+Sensitivity+Prescriptive — Strategies A/B/C", mimeType: "application/json" },
+  "POST /batch-pm":          { accepts: accept("$5.00"), description: "Batch analysis on N prediction markets (max 10) with cross-market risk summary", mimeType: "application/json" },
+  "POST /validate-decision":  { accepts: accept("$0.25"), description: "Second Opinion: validate schedule + optional fragility check", mimeType: "application/json" },
 };
 
 app.use(paymentMiddleware(paidRoutes, server));
@@ -112,6 +118,11 @@ app.post("/predict-strategy", predictStrategy);
 app.post("/route-liquidity", routeLiquidity);
 app.post("/schedule-robust", scheduleRobust);
 app.post("/pack-resources", packResources);
+app.post("/forecast-basic", forecastBasic);
+app.post("/risk-analysis", riskAnalysis);
+app.post("/full-intel", predictStrategy);
+app.post("/batch-pm", batchPm);
+app.post("/validate-decision", validateDecision);
 app.get("/health", (_req, res) => {
   res.json({
     gateway: "operational", version: "1.0.0", service: "OptimEngine Solana Gateway",
